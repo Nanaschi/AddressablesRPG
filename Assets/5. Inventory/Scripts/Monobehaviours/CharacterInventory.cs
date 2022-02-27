@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class CharacterInventory : MonoBehaviour
 {
@@ -25,16 +26,20 @@ public class CharacterInventory : MonoBehaviour
     #endregion
 
     #region Initializations
+
+    [Inject]
+    public void Constructor(InventoryDisplay inventoryDisplay)
+    {
+        hotBarDisplayHolders = inventoryDisplay.HotbarSlots;
+        InventoryDisplayHolder = inventoryDisplay.InventoryDisplayHolder;
+        inventoryDisplaySlots = InventoryDisplayHolder.GetComponentsInChildren<Image>();
+    }
+    
     void Start()
     {
         instance = this;
         itemEntry = new InventoryEntry(0, null, null);
         itemsInInventory.Clear();
-
-        inventoryDisplaySlots = InventoryDisplayHolder.GetComponentsInChildren<Image>();
-
-        foundStats = GameObject.FindGameObjectWithTag("Player");
-        charStats = foundStats.GetComponent<CharacterStats>();
     }
     #endregion
 
