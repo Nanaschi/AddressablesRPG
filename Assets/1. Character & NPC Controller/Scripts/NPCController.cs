@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 public class NPCController : MonoBehaviour
 {
@@ -21,13 +22,21 @@ public class NPCController : MonoBehaviour
     private float timeOfLastAttack;
 
     private bool playerIsAlive;
-
+    
+    
+    [Inject]
+    private void Construct(HeroController heroController)
+    {
+        player = heroController.transform;
+        player.gameObject.GetComponent<DestructedEvent>().IDied += PlayerDied;
+    }
+    
+    
     void Awake()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agentSpeed = agent.speed;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         index = Random.Range(0, waypoints.Length);
 
         InvokeRepeating("Tick", 0, 0.5f);
@@ -39,8 +48,6 @@ public class NPCController : MonoBehaviour
 
         timeOfLastAttack = float.MinValue;
         playerIsAlive = true;
-
-        player.gameObject.GetComponent<DestructedEvent>().IDied += PlayerDied;
     }
 
     private void PlayerDied()

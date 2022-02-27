@@ -924,7 +924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a88bc87cd8748bb8e8071ec0eb97cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnLocation: {fileID: 0}
+  _spawnLocation: {fileID: 1169713840}
   _playerPrefab: {fileID: 0}
 --- !u!1 &1169713839
 GameObject:
